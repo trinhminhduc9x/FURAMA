@@ -2,148 +2,142 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head">
     <meta charset="UTF-8" />
-    <title></title>
-    <!-- Nếu có CSS riêng, bạn có thể liên kết ở đây -->
+    <title>Facility Update</title>
+    <!-- CSS tùy chỉnh -->
     <style>
         .custom-container {
             text-align: center;
             font-size: 14px;
-            background-image: linear-gradient(to top right, #EB9FC0, #B83F8F, #2C2867);
-            height: 300vh;
-            overflow: hidden;
+            background: linear-gradient(to top right, #EB9FC0, #B83F8F, #2C2867);
+            padding: 3rem 0;
+        }
+
+        table {
+            margin-top: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
         }
     </style>
 </head>
 <body>
 <div th:replace="layout :: header"></div>
 
-<div class="container d-flex justify-content-md-center mb-5 custom-container">
-    <div class="row">
-        <div class="col bg-light info">
+<!-- Nội dung trang: Form thêm mới dịch vụ -->
+<div class="container custom-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 bg-light p-4 rounded">
             <form method="post" action="/facility/update" th:object="${facilityDto}">
                 <fieldset>
-                    <legend style="text-align: center"></legend>
-                    <table>
-                        <tr>
-                            <td colspan="2">
-                                <input type="hidden" th:field="*{id_facility}" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tên Dịch Vụ</td>
-                            <td>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        th:field="*{name}"
-                                />
-                                <div class="text-danger" th:errors="*{name}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Diện Tích Phòng</td>
-                            <td>
-                                <input
-                                        type="number"
-                                        class="form-control"
-                                        th:field="*{area}"
-                                />
-                                <div class="text-danger" th:errors="*{area}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Giá cả</td>
-                            <td>
-                                <input
-                                        type="number"
-                                        class="form-control"
-                                        th:field="*{cost}"
-                                />
-                                <div class="text-danger" th:errors="*{cost}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Số người tối đa</td>
-                            <td>
-                                <input
-                                        type="number"
-                                        class="form-control"
-                                        th:field="*{maxPeople}"
-                                />
-                                <div class="text-danger" th:errors="*{maxPeople}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Loại phòng thương</td>
-                            <td>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        th:field="*{standardRoom}"
-                                />
-                                <div class="text-danger" th:errors="*{standardRoom}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tiện lợi khác</td>
-                            <td>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        th:field="*{descriptionOtherConvenience}"
-                                />
-                                <div class="text-danger" th:errors="*{descriptionOtherConvenience}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Diện tích hồ bơi</td>
-                            <td>
-                                <input
-                                        type="number"
-                                        class="form-control"
-                                        th:field="*{poolArea}"
-                                />
-                                <div class="text-danger" th:errors="*{poolArea}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Số tầng</td>
-                            <td>
-                                <input
-                                        type="number"
-                                        class="form-control"
-                                        th:field="*{numberOfFloors}"
-                                />
-                                <div class="text-danger" th:errors="*{numberOfFloors}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Dịch vụ miễn phí</td>
-                            <td>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        th:field="*{facilityFree}"
-                                />
-                                <div class="text-danger" th:errors="*{facilityFree}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kiểu dịch vụ</td>
-                            <td>
-                                <select th:field="*{facilityType}">
-                                    <option th:each="p : ${facilityTypeList}" th:value="${p.id}" th:text="${p.name}"></option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kiểu thuê</td>
-                            <td>
-                                <select th:field="*{rentType}">
-                                    <option th:each="p : ${iRentTypeList}" th:value="${p.id}" th:text="${p.name}"></option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
+                    <legend class="text-center mb-4">Update Facility Information</legend>
 
+                    <input type="hidden" th:field="*{id_facility}" />
+
+                    <!-- Tên dịch vụ -->
+                    <div class="form-group">
+                        <label for="name">Tên Dịch Vụ</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nhập tên dịch vụ">
+                        <div class="text-danger" th:errors="*{name}"></div>
+                    </div>
+
+                    <!-- Diện tích phòng -->
+                    <div class="form-group">
+                        <label for="area">Diện Tích Phòng</label>
+                        <input type="number" class="form-control" id="area" th:field="*{area}" placeholder="Nhập diện tích phòng">
+                        <div class="text-danger" th:errors="*{area}"></div>
+                    </div>
+
+                    <!-- Giá cả -->
+                    <div class="form-group">
+                        <label for="cost">Giá Cả</label>
+                        <input type="number" class="form-control" id="cost" th:field="*{cost}" placeholder="Nhập giá cả">
+                        <div class="text-danger" th:errors="*{cost}"></div>
+                    </div>
+
+                    <!-- Số người tối đa -->
+                    <div class="form-group">
+                        <label for="maxPeople">Số Người Tối Đa</label>
+                        <input type="number" class="form-control" id="maxPeople" th:field="*{maxPeople}" placeholder="Nhập số người tối đa">
+                        <div class="text-danger" th:errors="*{maxPeople}"></div>
+                    </div>
+
+                    <!-- Loại phòng thương -->
+                    <div class="form-group">
+                        <label for="standardRoom">Loại Phòng Thương</label>
+                        <input type="text" class="form-control" id="standardRoom" th:field="*{standardRoom}" placeholder="Nhập loại phòng thương">
+                        <div class="text-danger" th:errors="*{standardRoom}"></div>
+                    </div>
+
+                    <!-- Tiện lợi khác -->
+                    <div class="form-group">
+                        <label for="descriptionOtherConvenience">Tiện Lợi Khác</label>
+                        <input type="text" class="form-control" id="descriptionOtherConvenience" th:field="*{descriptionOtherConvenience}" placeholder="Nhập tiện lợi khác">
+                        <div class="text-danger" th:errors="*{descriptionOtherConvenience}"></div>
+                    </div>
+
+                    <!-- Diện tích hồ bơi -->
+                    <div class="form-group">
+                        <label for="poolArea">Diện Tích Hồ Bơi</label>
+                        <input type="number" class="form-control" id="poolArea" th:field="*{poolArea}" placeholder="Nhập diện tích hồ bơi">
+                        <div class="text-danger" th:errors="*{poolArea}"></div>
+                    </div>
+
+                    <!-- Số tầng -->
+                    <div class="form-group">
+                        <label for="numberOfFloors">Số Tầng</label>
+                        <input type="number" class="form-control" id="numberOfFloors" th:field="*{numberOfFloors}" placeholder="Nhập số tầng">
+                        <div class="text-danger" th:errors="*{numberOfFloors}"></div>
+                    </div>
+
+                    <!-- Dịch vụ miễn phí -->
+                    <div class="form-group">
+                        <label for="facilityFree">Dịch Vụ Miễn Phí</label>
+                        <input type="text" class="form-control" id="facilityFree" th:field="*{facilityFree}" placeholder="Nhập dịch vụ miễn phí">
+                        <div class="text-danger" th:errors="*{facilityFree}"></div>
+                    </div>
+
+                    <!-- Kiểu dịch vụ -->
+                    <div class="form-group">
+                        <label for="facilityType">Kiểu Dịch Vụ</label>
+                        <select class="form-control" id="facilityType" th:field="*{facilityType}">
+                            <option th:each="p : ${facilityTypeList}" th:value="${p.id}" th:text="${p.name}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Kiểu thuê -->
+                    <div class="form-group">
+                        <label for="rentType">Kiểu Thuê</label>
+                        <select class="form-control" id="rentType" th:field="*{rentType}">
+                            <option th:each="p : ${iRentTypeList}" th:value="${p.id}" th:text="${p.name}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Nút điều khiển -->
+                    <div class="form-group mt-4">
+                        <button type="reset" class="btn btn-secondary w-100">Clear</button>
+                        <button type="submit" class="btn btn-success w-100 mt-3">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="layout :: footer"></div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>
