@@ -2,116 +2,104 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head">
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Furama - Customer Form</title>
+    <link rel="stylesheet" href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-size: 14px;
+            background-image: linear-gradient(to top right, #EB9FC0, #B83F8F, #2C2867);
+            background-attachment: fixed;
+            color: #333;
+        }
+        /* Container form: nền trắng với padding, bo góc và đổ bóng */
+        .form-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
+<!-- Header: Lấy từ layout -->
 <div th:replace="layout :: header"></div>
 
-<div class="container d-flex justify-content-md-center mb-5"
-     style="text-align: center; font-size: 14px; background-image: linear-gradient(to top right, #EB9FC0, #B83F8F, #2C2867);height: 300vh; overflow:hidden ">
-    <div class="row">
-        <div class="col bg-light info">
+<!-- Nội dung trang: Form thêm khách hàng -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 form-container">
+            <h2 class="text-center mb-4 text-primary">Thêm Khách Hàng</h2>
             <form action="/customer/save" method="post" th:object="${customerDto}">
-                <fieldset>
-                    <legend style="text-align: center"></legend>
-                    <table>
-                        <tr>
-                            <td>Tên Khách Hàng
-                            </td>
-                            <td>
-                                <input type="text" name="tenChuHo" id="tenChuHo"
-                                       class="form-control"
-                                       title="Input cho dung' hi?"
-                                       th:field="*{name}">
-                                <div class="text-danger" th:errors="*{name}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ngày sinh
-                            </td>
-                            <td>
-                                <input type="date" name="tenHonThe" id="tenHonThe"
-                                       class="form-control"
-                                       title="Input cho dung' hi?"
-                                       th:field="*{dateOfBirth}">
-                                <div class="text-danger" th:errors="*{dateOfBirth}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Giới tính
-                            </td>
-                            <td>
-                                <input type="radio" th:field="*{gender}" value="0"/>MALE
-                                <input type="radio" th:field="*{gender}" value="1"/>FEMALE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>số chứng minh nhân dân
-                            </td>
-                            <td>
-                                <input type="number" name="endtDate" id="endtDate" class="form-control"
-                                       th:field="*{idCard}">
-                                <div class="text-danger" th:errors="*{idCard}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>số điện thoại
-                            </td>
-                            <td>
-                                <input type="number" name="note" class="form-control"
-                                       th:field="*{phoneNumber}">
-                                <div class="text-danger" th:errors="*{phoneNumber}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>email
-                            </td>
-                            <td>
-                                <input type="email" name="phoneNumber" class="form-control"
-                                       th:field="*{email}">
-                                <div class="text-danger" th:errors="*{email}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> địa chỉ
-                            </td>
-                            <td>
-                                <input type="text" name="phoneNumber" class="form-control"
-                                       th:field="*{address}">
-                                <div class="text-danger" th:errors="*{address}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Kiểu Khách Hàng
-                            </td>
-                            <td>
-                                <select th:field="*{customerType}">
-                                    <option th:each="p : ${customerTypes}"
-                                            th:value="${p.id}"
-                                            th:text="${p.name}"></option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="reset" value="Clear"></td>
-                            <td><input type="submit" value="submit" class=" btn-success"></td>
-                        </tr>
-                    </table>
-                </fieldset>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Tên Khách Hàng</label>
+                    <input type="text" id="name" name="name" class="form-control" th:field="*{name}" placeholder="Nhập tên khách hàng">
+                    <div class="text-danger" th:errors="*{name}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="dateOfBirth" class="form-label">Ngày sinh</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" th:field="*{dateOfBirth}">
+                    <div class="text-danger" th:errors="*{dateOfBirth}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giới tính</label><br>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="genderMale" name="gender" class="form-check-input" th:field="*{gender}" value="0">
+                        <label for="genderMale" class="form-check-label">MALE</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="genderFemale" name="gender" class="form-check-input" th:field="*{gender}" value="1">
+                        <label for="genderFemale" class="form-check-label">FEMALE</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="idCard" class="form-label">Số chứng minh nhân dân</label>
+                    <input type="number" id="idCard" name="idCard" class="form-control" th:field="*{idCard}" placeholder="Nhập số CMND">
+                    <div class="text-danger" th:errors="*{idCard}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                    <input type="number" id="phoneNumber" name="phoneNumber" class="form-control" th:field="*{phoneNumber}" placeholder="Nhập số điện thoại">
+                    <div class="text-danger" th:errors="*{phoneNumber}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" th:field="*{email}" placeholder="Nhập email">
+                    <div class="text-danger" th:errors="*{email}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Địa chỉ</label>
+                    <input type="text" id="address" name="address" class="form-control" th:field="*{address}" placeholder="Nhập địa chỉ">
+                    <div class="text-danger" th:errors="*{address}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="customerType" class="form-label">Kiểu Khách Hàng</label>
+                    <select id="customerType" name="customerType" class="form-select" th:field="*{customerType}">
+                        <option value="">-- Chọn kiểu khách hàng --</option>
+                        <option th:each="p : ${customerTypes}" th:value="${p.id}" th:text="${p.name}"></option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <input type="reset" value="Clear" class="btn btn-secondary">
+                    <input type="submit" value="Submit" class="btn btn-success">
+                </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Footer: Lấy từ layout -->
 <div th:replace="layout :: footer"></div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 <script>
     $(function () {
         $("#name").title();
     });
 </script>
-
 </body>
 </html>
