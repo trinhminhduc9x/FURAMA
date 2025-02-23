@@ -1,137 +1,205 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
-<head replace="/layout :: head">
+<head>
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Furama</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background: url("https://img.freepik.com/free-vector/soft-colorful-watercolor-texture-decorative-background-vector_1055-12347.jpg?w=2000") no-repeat center center fixed;
+            background-size: cover;
+        }
+        header nav {
+            background-image: linear-gradient(to top right, #EB9FC0, #B83F8F, #2C2867);
+        }
+        .navbar-brand img {
+            max-height: 50px;
+        }
+        /* Animated welcome section */
+        #animation {
+            width: 600px;
+            height: 50px;
+            position: relative;
+            animation: example 9s linear infinite alternate;
+            margin: 1rem auto;
+        }
+        @keyframes example {
+            0%   { background-color: #1bff03; left: 0; top: 0; }
+            25%  { background-color: yellow; left: 900px; top: 0; }
+            50%  { background-color: #0000ff; left: 900px; top: 900px; }
+            75%  { background-color: #4b0080; left: 0; top: 900px; }
+            100% { background-color: #00ff8f; left: 0; top: 0; }
+        }
+        .welcome-text {
+            font-size: 3rem;
+            color: #f1df9d;
+            font-family: "Times New Roman", serif;
+            font-weight: bold;
+            font-style: italic;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+            text-align: center;
+        }
+        h2 {
+            font-size: 3rem;
+            color: white;
+            font-family: 'Trebuchet MS', sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+        /* Card margin fix */
+        .card {
+            margin: 1.5rem auto;
+        }
+        footer {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<div replace="layout :: header"></div>
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-lg text-center">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt="Furama Logo" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-outline-danger me-2" aria-current="page" href="https://trinhminhduc9x.github.io/FURAMA/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-outline-warning me-2" href="https://trinhminhduc9x.github.io/FURAMA/employee/list">Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-outline-primary me-2" href="https://trinhminhduc9x.github.io/FURAMA/customer/list">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-outline-secondary me-2" href="https://trinhminhduc9x.github.io/FURAMA/facility/list">Facility</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-outline-success" href="https://trinhminhduc9x.github.io/FURAMA/contract/list">Contract</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success bg-warning" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
 
-
-<div class="container d-flex justify-content-md-center mb-5"
-     style="text-align: center; font-size: 14px; background-image: linear-gradient(to top right, #EB9FC0, #B83F8F, #2C2867);height: 300vh; overflow:hidden ">
+<!-- Nội dung trang: Form thêm mới dịch vụ (Facility) -->
+<div class="container d-flex justify-content-md-center mb-5" style="text-align: center; overflow:auto;">
     <div class="row">
-        <div class="col bg-light info">
+        <div class="col bg-light info p-4">
             <form action="/facility/save" method="post" th:object="${facilityDto}">
                 <fieldset>
-                    <legend style="text-align: center"></legend>
-                    <table>
+                    <legend style="text-align: center; font-size: 1.8rem; font-weight: bold; color: #d63384;">
+                        Facility Information
+                    </legend>
+                    <table class="table table-borderless">
                         <tr>
-                            <td>Tên Dịch Vụ
-                            </td>
+                            <td style="text-align: left; width: 40%;">Tên Dịch Vụ</td>
                             <td>
-                                <input type="text"
-                                       class="form-control"
-                                       th:field="*{name}">
+                                <input type="text" class="form-control" th:field="*{name}" placeholder="Nhập tên dịch vụ">
                                 <div class="text-danger" th:errors="*{name}"></div>
                             </td>
                         </tr>
                         <tr>
-                            <td>Diện Tích Phòng
-                            </td>
+                            <td style="text-align: left;">Diện Tích Phòng</td>
                             <td>
-                                <input type="number"
-                                       class="form-control"
-                                       th:field="*{area}">
+                                <input type="number" class="form-control" th:field="*{area}" placeholder="Nhập diện tích">
                                 <div class="text-danger" th:errors="*{area}"></div>
                             </td>
                         </tr>
                         <tr>
-                            <td>Giá cả
-                            </td>
+                            <td style="text-align: left;">Giá cả</td>
                             <td>
-                                <input type="number"
-                                       class="form-control"
-                                       th:field="*{cost}">
+                                <input type="number" class="form-control" th:field="*{cost}" placeholder="Nhập giá cả">
                                 <div class="text-danger" th:errors="*{cost}"></div>
                             </td>
                         </tr>
                         <tr>
-                            <td>Số người tối đa
-                            </td>
+                            <td style="text-align: left;">Số người tối đa</td>
                             <td>
-                                <input type="number" class="form-control"
-                                       th:field="*{maxPeople}">
+                                <input type="number" class="form-control" th:field="*{maxPeople}" placeholder="Nhập số người tối đa">
                                 <div class="text-danger" th:errors="*{maxPeople}"></div>
                             </td>
                         </tr>
-                        <tr id="opt1" style="display: none" >
-                            <td>Loại phòng thương
-                            </td>
+                        <!-- Các dòng ẩn theo điều kiện dựa vào kiểu dịch vụ -->
+                        <tr id="opt1" style="display: none;">
+                            <td style="text-align: left;">Loại phòng thương</td>
                             <td>
-                                <input type="text"
-                                       class="form-control"
-                                       th:field="*{standardRoom}">
+                                <input type="text" class="form-control" th:field="*{standardRoom}" placeholder="Nhập loại phòng">
                                 <div class="text-danger" th:errors="*{standardRoom}"></div>
                             </td>
                         </tr>
-                        <tr id="opt4" style="display: none" >
-                            <td>Tiện lợi khác
-                            </td>
+                        <tr id="opt4" style="display: none;">
+                            <td style="text-align: left;">Tiện lợi khác</td>
                             <td>
-                                <input type="text"
-                                       class="form-control"
-                                       th:field="*{descriptionOtherConvenience}">
+                                <input type="text" class="form-control" th:field="*{descriptionOtherConvenience}" placeholder="Nhập tiện lợi khác">
                                 <div class="text-danger" th:errors="*{descriptionOtherConvenience}"></div>
                             </td>
                         </tr>
-                        <tr id="opt2" style="display: none" >
-                            <td>Diện tích hồ bơi
-                            </td>
+                        <tr id="opt2" style="display: none;">
+                            <td style="text-align: left;">Diện tích hồ bơi</td>
                             <td>
-                                <input type="number"
-                                       class="form-control"
-                                       th:field="*{poolArea}">
+                                <input type="number" class="form-control" th:field="*{poolArea}" placeholder="Nhập diện tích hồ bơi">
                                 <div class="text-danger" th:errors="*{poolArea}"></div>
                             </td>
                         </tr>
-                        <tr id="opt3" style="display: none" >
-                            <td>Số tầng
-                            </td>
+                        <tr id="opt3" style="display: none;">
+                            <td style="text-align: left;">Số tầng</td>
                             <td>
-                                <input type="number"
-                                       class="form-control"
-                                       th:field="*{numberOfFloors}">
+                                <input type="number" class="form-control" th:field="*{numberOfFloors}" placeholder="Nhập số tầng">
                                 <div class="text-danger" th:errors="*{numberOfFloors}"></div>
                             </td>
                         </tr>
-                        <tr id="opt5" style="display: none" >
-                            <td>Dịch vụ miễn phí
-                            </td>
+                        <tr id="opt5" style="display: none;">
+                            <td style="text-align: left;">Dịch vụ miễn phí</td>
                             <td>
-                                <input type="text"
-                                       class="form-control"
-                                       th:field="*{facilityFree}">
+                                <input type="text" class="form-control" th:field="*{facilityFree}" placeholder="Nhập dịch vụ miễn phí">
                                 <div class="text-danger" th:errors="*{facilityFree}"></div>
                             </td>
                         </tr>
                         <tr>
+                            <td style="text-align: left;">Kiểu dịch vụ</td>
                             <td>
-                                Kiểu dịch vụ
-                            </td>
-                            <td>
-                                <select th:field="*{facilityType}" onchange="changeForm(this)">
-                                    <option th:each="p : ${facilityTypeList}"
-                                            th:value="${p.id}"
-                                            th:text="${p.name}"></option>
+                                <select class="form-select" th:field="*{facilityType}" onchange="changeForm(this)">
+                                    <option value="">-- Chọn kiểu dịch vụ --</option>
+                                    <option th:each="p : ${facilityTypeList}" th:value="${p.id}" th:text="${p.name}"></option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
+                            <td style="text-align: left;">Kiểu thuê</td>
                             <td>
-                                Kiểu thuê
-                            </td>
-                            <td>
-                                <select th:field="*{rentType}">
-                                    <option th:each="p : ${iRentTypeList}"
-                                            th:value="${p.id}"
-                                            th:text="${p.name}"></option>
+                                <select class="form-select" th:field="*{rentType}">
+                                    <option value="">-- Chọn kiểu thuê --</option>
+                                    <option th:each="p : ${iRentTypeList}" th:value="${p.id}" th:text="${p.name}"></option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="reset" value="Clear"></td>
-                            <td><input type="submit" value="submit" class=" btn-success"></td>
+                            <td></td>
+                            <td class="d-flex justify-content-between">
+                                <input type="reset" value="Clear" class="btn btn-secondary">
+                                <input type="submit" value="Submit" class="btn btn-success">
+                            </td>
                         </tr>
                     </table>
                 </fieldset>
@@ -140,8 +208,8 @@
     </div>
 </div>
 
+<!-- Footer: Lấy từ layout chung -->
 <div th:replace="layout :: footer"></div>
-
 
 <script>
     $(function () {
@@ -177,10 +245,8 @@
                 document.getElementById("opt3").style.display = "block";
                 document.getElementById("opt4").style.display = "block";
                 document.getElementById("opt5").style.display = "block";
-
         }
     }
 </script>
-
 </body>
 </html>
